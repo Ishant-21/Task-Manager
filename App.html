@@ -24,7 +24,7 @@
                 <button type="submit" class="hero-button">Click to add</button>
             </section>
             
-            <form class="add-new-task">
+            <form class="add-new-task" id="add-new-task">
                 <div class="task-input">
                     <input type="text" name="task" id="task" placeholder="Enter your Task">
                 
@@ -44,32 +44,32 @@
                 </div>
 
                 <div class="task-action">
-                    <button class="add-button">+ Add</button>
-                    <button class="cancel-button">Cancel</button>
+                    <button type="submit" class="add-button">+ Add</button>
+                    <button type="button" class="cancel-button">Cancel</button>
                 </div>
             </form>
 
 
             <section class="filter-tasks">
-                <button class="filter-all">All</button>
-                <button class="filter-completed">Completed</button>
-                <button class="filter-active">Active</button>
+                <button type="button" class="filter-all">All</button>
+                <button type="button" class="filter-completed">Completed</button>
+                <button type="button" class="filter-active">Active</button>
             </section>
 
             <section class="tasks-section">
                 <ol id="tasks-list">
                     <li class="single-task-item">
                         <article class="task-left">
-                            <input type="checkbox" name="check-task" id="check-task">
+                            <input type="checkbox" name="check-task" class="check-task">
                             <span>Demo Task</span>
                         </article>
                         <article class="task-right">
                             <span class="due-date-container">due : due date</span>  
                             <div class="edit-button-container">
-                                <button class="edit-button"><img src="/icons/edit-icon.png" class="edit-icon"></button>
+                                <button type="button" class="edit-button"><img src="/icons/edit-icon.png" class="edit-icon"></button>
                             </div>
                             <div class="delete-button-container">
-                                <button class="delete-button"><img src="/icons/delete-icon.png" class="delete-icon"></button>
+                                <button type="button" class="delete-button"><img src="/icons/delete-icon.png" class="delete-icon"></button>
                             </div>
                             
                                 
