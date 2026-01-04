@@ -25,30 +25,37 @@
             </section>
             
             <form class="add-new-task">
+                <div class="task-input">
+                    <input type="text" name="task" id="task" placeholder="Enter your Task">
                 
-                <label for="task">Task :- </label>
-                <input type="text" name="task" id="task" placeholder="Enter your Task">
-                
-                <div>
-                    <label for="">Due Date :- </label>
-                    <select name="day" id="day">
-                        <option value="" disabled selected>Day</option>
-                    </select>
-                    <select name="month" id="month">
-                        <option value="" disabled selected>Month</option>
-                    </select>
-                    <select name="year" id="year">
-                        <option value="" disabled selected>Year</option>
-                    </select>
+                    <div class="due-date">
+                        <label for="">Due Date :- </label>
+                        <select name="day" id="day">
+                            <option value="" disabled selected>Day</option>
+                        </select>
+                        <select name="month" id="month">
+                            <option value="" disabled selected>Month</option>
+                        </select>
+                        <select name="year" id="year">
+                            <option value="" disabled selected>Year</option>
+                        </select>
+                    </div>
+
                 </div>
-                
-                <button class="cancel-button">Cancel</button><button class="add-button">Add</button>
+
+                <div class="task-action">
+                    <button class="add-button">+ Add</button>
+                    <button class="cancel-button">Cancel</button>
+                </div>
             </form>
 
 
             <section class="filter-tasks">
-                <button>All</button><button>Completed</button><button>Active</button>
+                <button class="filter-all">All</button>
+                <button class="filter-completed">Completed</button>
+                <button class="filter-active">Active</button>
             </section>
+
             <section class="tasks-list">
                 <ol>
                     <li>
