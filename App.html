@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    
+
+</head>
+<body>
+    <div  class="root">
+        
+        <header class="header">
+            <div class="header-left">Personal Task Manager</div>
+            <div class="header-right">Date : </div>
+        </header>
+
+
+        <main class="main">
+            <h1 class="hero-title">Add a Task to manage</h1>
+            <button type="submit" class="hero-button">Click to add</button>
+            <form class="add-new-task">
+                
+                <label for="task">Task :- </label>
+                <input type="text" name="task" id="task" placeholder="Enter your Task">
+                
+                <div>
+                    <label for="">Due Date :- </label>
+                    <select name="day" id="day">
+                        <option value="" disabled selected>Day</option>
+                    </select>
+                    <select name="month" id="month">
+                        <option value="" disabled selected>Month</option>
+                    </select>
+                    <select name="year" id="year">
+                        <option value="" disabled selected>Year</option>
+                    </select>
+                </div>
+                
+                <button class="cancel-button">Cancel</button><button class="add-button">Add</button>
+            </form>
+
+
+            <section class="filter-tasks">
+                <button>All</button><button>Completed</button><button>Active</button>
+            </section>
+            <section class="tasks-list">
+                <ol>
+                    <li>
+                        <article class="signle-task">
+                            <input type="checkbox" name="check-task" id="check-task">
+                            <span>Demo Task</span>
+                            <button>Edit</button>
+                            <button>Delete</button>    
+                        </article>
+                    </li>
+                </ol>
+               
+            </section>
+        </main>
+    </div>
+        
+</body>
+</html>
