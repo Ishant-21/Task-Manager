@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="root.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="main.css">
-
+   
 </head>
 <body>
     <div  class="root">
@@ -20,16 +20,16 @@
 
         <main class="main">
             <section class="hero-section">
-                <h1 class="hero-title">Add a Task to manage</h1>
-                <button type="submit" class="hero-button">Click to add</button>
+                <h1 class="hero-title">It's good that you are managing your Tasks</h1>
+                <button type="submit" class="hero-button">Click to add a Task</button>
             </section>
             
-            <form class="add-new-task" id="add-new-task">
+            <form id="add-new-task" class="add-new-task is-hidden" hidden>
                 <div class="task-input">
                     <input type="text" name="task" id="task" placeholder="Enter your Task">
                 
                     <div class="due-date">
-                        <label for="">Due Date :- </label>
+                        <label >Due Date :- </label>
                         <select name="day" id="day">
                             <option value="" disabled selected>Day</option>
                         </select>
@@ -80,6 +80,7 @@
             </section>
         </main>
     </div>
+     <script src="main.js"></script>
         
 </body>
 </html>
