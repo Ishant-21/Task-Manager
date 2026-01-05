@@ -51,6 +51,7 @@ let taskInput=(tasktitle,lastdate)=>{
                         </article>
         `
     tasklist.append(newtask)
+    
 }
 
 add.addEventListener('click',()=>{taskInput(task.value,`${day.value} ${month.value} ${year.value}`)})
