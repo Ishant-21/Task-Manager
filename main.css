@@ -55,12 +55,12 @@
 
 .due-date {
     cursor: default;
-    font-size: 24px;
+    font-size: 18px;
 
 }
 
 #day, #month, #year {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .task-action {
@@ -78,6 +78,7 @@
     color: #fff;
     padding: 8px 12px;
     cursor: pointer;
+    margin-bottom: 2px;
 }
 
 .cancel-button {
@@ -87,6 +88,7 @@
     border-radius: 1px;
     color: #fff;
     padding: 8px 11px;
+    margin-top: 2px;
     cursor: pointer;
 }
 
