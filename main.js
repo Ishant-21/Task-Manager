@@ -17,7 +17,13 @@ let today = new Date()
 let date=`${weekdays[today.getDay()]}, ${today.getDate()} ${monthnames[today.getMonth()]} ${today.getFullYear()}`
 document.querySelector(".header-right").innerText=`${date}`
 
+//variables declaration for Edit button
 
+let taskID = null
+let editbtn;
+let currentTask;
+let currentID;
+let currentduedate;
 //Task Input form logic
 
 let task= document.getElementById("task")
@@ -82,14 +88,11 @@ let daySelect=(mon)=>{
 
 }
 
-
-
-
 month.addEventListener('change',()=>{daySelect(Number(month.value))})
 
 let taskData=[]
     
-let taskInput=(tasktitle,lastdate)=>{
+let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
     
     if(tasktitle===""){
         alert("please enter some task")
@@ -102,7 +105,11 @@ let taskInput=(tasktitle,lastdate)=>{
     const taskObject= {
         id:Date.now(),
         taskvalue:tasktitle,
-        duedate:lastdate,
+        duedate:{
+            d:dueday,
+            m:duemonth,
+            y:dueyear
+        },
         completed:false
     }
     taskData.push(taskObject)
@@ -114,7 +121,7 @@ let taskInput=(tasktitle,lastdate)=>{
                             <span>${tasktitle}</span>
                         </article>
                         <article class="task-right">
-                            <span class="due-date-container">${lastdate}</span>  
+                            <span class="due-date-container">${taskObject.duedate.d} - ${taskObject.duedate.m} - ${taskObject.duedate.y}</span>  
                             <div class="edit-button-container">
                                 <button type="button" class="edit-button"><img src="/icons/edit-icon.png" class="edit-icon"></button>
                             </div>
@@ -127,11 +134,34 @@ let taskInput=(tasktitle,lastdate)=>{
         `
     tasklist.append(newtask)
 
-   
+    editbtn=newtask.querySelector(".edit-button")
+    editbtn.addEventListener('click',()=>{
+        currentID=taskObject.id
+        currentTask=taskObject.taskvalue
+        currentduedate={
+            currentday:taskObject.duedate.d,
+            currentmonth:taskObject.duedate.m,
+            currentyear:taskObject.duedate.y
+        }
+        editTask();
+
+    })
     
 }
 
-add.addEventListener('click',()=>{taskInput(task.value,`${day.value} - ${month.value} - ${year.value}`)})
+add.addEventListener('click',()=>{
+    // if(taskID===null){
+    //     taskInput(task.value, day.value, month.value, year.value)
+    // }
+    // else{
+    //     //something will be here
+
+    // }
+    taskInput(task.value, day.value, month.value, year.value)
+    })
+    
+    
+    
 
 let clearform=()=>{
     task.value=""
@@ -141,4 +171,17 @@ let clearform=()=>{
 }
 
 cancel.addEventListener('click',clearform)
+
+//edit button logic
+let editTask=()=>{
+    taskID=currentID
+    task.value=currentTask
+    year.value=currentduedate.currentyear
+    month.value=currentduedate.currentmonth
+    daySelect(Number(month.value))
+    day.value=currentduedate.currentday
+    console.log('hi');
+    
+
+}
 
