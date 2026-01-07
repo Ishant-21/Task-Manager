@@ -95,6 +95,10 @@ let taskInput=(tasktitle,lastdate)=>{
         alert("please enter some task")
         return;
     }
+    if(!day.value || !month.value || !year.value){
+        alert("Please enter Due date for your task")
+        return
+    }
     const taskObject= {
         id:Date.now(),
         taskvalue:tasktitle,
