@@ -91,18 +91,12 @@ let daySelect=(mon)=>{
 month.addEventListener('change',()=>{daySelect(Number(month.value))})
 
 let taskData=[]
+
     
 let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
-    
-    if(tasktitle===""){
-        alert("please enter some task")
-        return;
-    }
-    if(!day.value || !month.value || !year.value){
-        alert("Please enter Due date for your task")
-        return
-    }
-    const taskObject= {
+    emptyFieldValidation();
+    if(task.value && day.value && month.value && year.value ){
+    let taskObject= {
         id:Date.now(),
         taskvalue:tasktitle,
         duedate:{
@@ -114,11 +108,12 @@ let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
     }
     taskData.push(taskObject)
     let newtask= document.createElement('li');
+    newtask.setAttribute('id',taskObject.id)
     newtask.classList.add("single-task-item")
     newtask.innerHTML= `
-         <article class="task-left">
+        <article class="task-left">
                             <input type="checkbox" name="check-task" class="check-task">
-                            <span>${tasktitle}</span>
+                            <span>${taskObject.taskvalue}</span>
                         </article>
                         <article class="task-right">
                             <span class="due-date-container">${taskObject.duedate.d} - ${taskObject.duedate.m} - ${taskObject.duedate.y}</span>  
@@ -134,8 +129,15 @@ let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
         `
     tasklist.append(newtask)
 
-    editbtn=newtask.querySelector(".edit-button")
-    editbtn.addEventListener('click',()=>{
+    }
+}
+
+tasklist.addEventListener('click',(e)=>{
+    if(e.target.closest(".edit-button")){
+        let li= e.target.closest('li')
+        let id=Number(li.id)
+        let taskObject=taskData.find(obj=>obj.id===id)
+        if (!taskObject) return;
         currentID=taskObject.id
         currentTask=taskObject.taskvalue
         currentduedate={
@@ -144,32 +146,55 @@ let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
             currentyear:taskObject.duedate.y
         }
         editTask();
+        changeAdd();
 
-    })
-    
+        
+    }
+
+    if(e.target.closest(".delete-button")){
+        let li = e.target.closest('li')
+        let id = Number(li.id)
+        taskData=taskData.filter(element=>element.id !== id )
+        li.remove()
+    }
+
+})
+
+//+ADD --> Update appearance of add button
+let changeAdd =()=>{
+    add.innerText='Update'
+    add.classList.remove('add-button')
+    add.classList.add('update-button')
 }
 
 add.addEventListener('click',()=>{
-    // if(taskID===null){
-    //     taskInput(task.value, day.value, month.value, year.value)
-    // }
-    // else{
-    //     //something will be here
+    add.innerText="+ Add"
+    add.classList.remove("update-button")
+    add.classList.add("add-button")
+    if(taskID===null){
+        taskInput(task.value, day.value, month.value, year.value)
+        clearform();
 
-    // }
-    taskInput(task.value, day.value, month.value, year.value)
-    })
-    
-    
+    }
+    else{
+        updateTask(task.value, day.value, month.value, year.value);
+        taskID =null;
+        clearform();
+
+    }
+})
     
 
+      
+    
+//cancel-button function
 let clearform=()=>{
     task.value=""
     year.value=""
     month.value=""
     day.value=""
 }
-
+//cancel button listener
 cancel.addEventListener('click',clearform)
 
 //edit button logic
@@ -179,9 +204,61 @@ let editTask=()=>{
     year.value=currentduedate.currentyear
     month.value=currentduedate.currentmonth
     daySelect(Number(month.value))
-    day.value=currentduedate.currentday
-    console.log('hi');
-    
-
+    day.value=currentduedate.currentday 
 }
 
+let updateTask=(tasktitle,dueday,duemonth,dueyear)=>{
+    //emptyFieldValidation(tasktitle,dueday,duemonth,dueyear)
+    if(tasktitle===""){
+        alert("please enter some task")
+        return;
+    }
+    if(!day.value || !month.value || !year.value){
+        alert("Please enter Due date for your task")
+        return
+    } 
+    
+    if(task.value && day.value && month.value && year.value ){
+    let currentElement= document.getElementById(taskID)
+    let currentTaskObject=taskData.find(obj=>obj.id===taskID)
+    if (!currentTaskObject) return;
+    currentTaskObject.taskvalue=tasktitle
+    currentTaskObject.duedate={
+            d:dueday,
+            m:duemonth,
+            y:dueyear
+        }
+
+    currentElement.innerHTML=""
+    currentElement.innerHTML= `
+        <article class="task-left">
+                            <input type="checkbox" name="check-task" class="check-task">
+                            <span>${currentTaskObject.taskvalue}</span>
+                        </article>
+                        <article class="task-right">
+                            <span class="due-date-container">${currentTaskObject.duedate.d} - ${currentTaskObject.duedate.m} - ${currentTaskObject.duedate.y}</span>  
+                            <div class="edit-button-container">
+                                <button type="button" class="edit-button"><img src="/icons/edit-icon.png" class="edit-icon"></button>
+                            </div>
+                            <div class="delete-button-container">
+                                <button type="button" class="delete-button"><img src="/icons/delete-icon.png" class="delete-icon"></button>
+                            </div>
+                            
+                                
+                        </article>
+        `
+    }
+    
+}
+
+let emptyFieldValidation=(tasktitle,dueday,duemonth,dueyear)=>{
+    if(tasktitle===""){
+        alert("please enter some task")
+        return;
+    }
+    if(!day.value || !month.value || !year.value){
+        alert("Please enter Due date for your task")
+        return
+    } 
+
+}

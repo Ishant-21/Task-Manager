@@ -81,6 +81,17 @@
     margin-bottom: 2px;
 }
 
+.update-button {
+     display: block;
+    background-color: #49a50c;
+    border: 2px solid #49a50c;
+    border-radius: 1px;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
 .cancel-button {
     display: block;
     background-color: #dc2626;
