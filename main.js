@@ -112,7 +112,7 @@ let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
     newtask.classList.add("single-task-item")
     newtask.innerHTML= `
         <article class="task-left">
-                            <input type="checkbox" name="check-task" class="check-task">
+                            <input type="checkbox" name="check-task" class="check-task" >
                             <span>${taskObject.taskvalue}</span>
                         </article>
                         <article class="task-right">
@@ -131,13 +131,17 @@ let taskInput=(tasktitle,dueday,duemonth,dueyear)=>{
 
     }
 }
-
-tasklist.addEventListener('click',(e)=>{
+let taskListHandler=(e)=>{
     if(e.target.closest(".edit-button")){
         let li= e.target.closest('li')
         let id=Number(li.id)
         let taskObject=taskData.find(obj=>obj.id===id)
         if (!taskObject) return;
+        if(taskObject.completed===true) {
+            alert("Completed tasks cannot be edited")
+            return
+        }
+
         currentID=taskObject.id
         currentTask=taskObject.taskvalue
         currentduedate={
@@ -147,8 +151,6 @@ tasklist.addEventListener('click',(e)=>{
         }
         editTask();
         changeAdd();
-
-        
     }
 
     if(e.target.closest(".delete-button")){
@@ -158,7 +160,21 @@ tasklist.addEventListener('click',(e)=>{
         li.remove()
     }
 
-})
+    if(e.target.closest(".check-task")){
+        
+        let li=e.target.closest('li')
+        let id= Number(li.id)
+        let taskObject = taskData.find(element=>element.id===id)
+        taskObject.completed=true   
+        li.classList.add("task-completed")
+        e.target.remove()
+
+        
+    }    
+}
+
+tasklist.addEventListener('click',(e)=>{taskListHandler(e)})
+
 
 //+ADD --> Update appearance of add button
 let changeAdd =()=>{
@@ -208,16 +224,8 @@ let editTask=()=>{
 }
 
 let updateTask=(tasktitle,dueday,duemonth,dueyear)=>{
-    //emptyFieldValidation(tasktitle,dueday,duemonth,dueyear)
-    if(tasktitle===""){
-        alert("please enter some task")
-        return;
-    }
-    if(!day.value || !month.value || !year.value){
-        alert("Please enter Due date for your task")
-        return
-    } 
-    
+    emptyFieldValidation()
+        
     if(task.value && day.value && month.value && year.value ){
     let currentElement= document.getElementById(taskID)
     let currentTaskObject=taskData.find(obj=>obj.id===taskID)
@@ -251,14 +259,86 @@ let updateTask=(tasktitle,dueday,duemonth,dueyear)=>{
     
 }
 
-let emptyFieldValidation=(tasktitle,dueday,duemonth,dueyear)=>{
-    if(tasktitle===""){
+let emptyFieldValidation=()=>{
+    if(!task.value){
         alert("please enter some task")
-        return;
+        return  false
     }
     if(!day.value || !month.value || !year.value){
         alert("Please enter Due date for your task")
-        return
+        return false
     } 
 
 }
+
+
+//Filter tasks logic 
+let allTasks=document.querySelector(".filter-all")
+let completedTasks=document.querySelector(".filter-completed")
+let activeTasks=document.querySelector(".filter-active")
+
+document.querySelector(".filter-tasks").addEventListener('click',(e)=>{
+
+        if(e.target===allTasks){
+            allTasks.classList.add("filter-buttons-toggle-hover")
+            activeTasks.classList.remove("filter-buttons-toggle-hover")
+            completedTasks.classList.remove("filter-buttons-toggle-hover")
+            console.log("all tasks")
+            
+
+            taskData.map((obj)=>{
+            let li = document.getElementById(obj.id)
+            console.log(obj.id);
+            
+            li.classList.remove("is-hidden")
+        })
+
+
+        }
+
+        if(e.target===completedTasks){
+            allTasks.classList.remove("filter-buttons-toggle-hover")
+            activeTasks.classList.remove("filter-buttons-toggle-hover")
+            completedTasks.classList.add("filter-buttons-toggle-hover")
+            console.log("completed tasks")
+
+
+        taskData.map((obj)=>{
+            let li = document.getElementById(obj.id)
+            if(!(obj.completed == true)){
+                console.log(obj.id);
+                li.classList.add("is-hidden")
+
+            }
+            else{
+                li.classList.remove("is-hidden")
+            }
+           
+        })
+
+        }
+
+        if(e.target===activeTasks){
+            allTasks.classList.remove("filter-buttons-toggle-hover")
+            activeTasks.classList.add("filter-buttons-toggle-hover")
+            completedTasks.classList.remove("filter-buttons-toggle-hover")
+            console.log("active tasks")
+
+            taskData.map((obj)=>{
+                let li = document.getElementById(obj.id)
+            if(!(obj.completed == false)){
+                console.log(obj.id);
+                li.classList.add("is-hidden")
+
+            }
+            else{
+                li.classList.remove("is-hidden")
+            }
+           
+        })
+            
+
+        }
+
+
+    })
